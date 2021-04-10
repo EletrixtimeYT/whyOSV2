@@ -1,3 +1,5 @@
+shell.run("cd /rom/")
+shell.run("mkdir whyOS")
 shell.run("wget https://raw.githubusercontent.com/timaaos/whyOS/main/whyOS.lua /rom/whyOS/whyOS.lua")
 shell.run("wget https://raw.githubusercontent.com/timaaos/whyOS/main/test.lua /rom/whyOS/test.lua")
 shell.run("wget https://raw.githubusercontent.com/timaaos/whyOS/main/api.lua /rom/whyOS/api.lua")
