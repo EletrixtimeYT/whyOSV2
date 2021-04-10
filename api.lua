@@ -21,6 +21,7 @@ function Window:new(x, y,width,height,title)
 		obj.title = title
 		obj.labels = {}
 		obj.buttons = {}
+		obj.pixels = {}
 		obj.canclose = true
 
     function obj:move(x,y)
@@ -79,6 +80,19 @@ function Window:new(x, y,width,height,title)
 			end
 		end
 	end
+    setmetatable(obj, self)
+    self.__index = self; return obj
+end
+function Pixel:new(x,y,color)
+	local obj= {}
+        obj.x = x
+        obj.y = y
+		obj.color = color
+
+    function obj:move(x,y)
+        obj.x = x
+		obj.y = y
+    end
     setmetatable(obj, self)
     self.__index = self; return obj
 end
