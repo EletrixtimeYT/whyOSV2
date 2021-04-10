@@ -56,7 +56,7 @@ function render()
 	end
 end
 explorer = api.Window:new(1,5,15,6,"Desktop")
-for _,file in ipairs(fs.list("/rom/whyOS/")) do
+for _,file in ipairs(fs.list("/whyOS/")) do
 	if ends_with(file,".lua") and file ~= "whyOS.lua" and file ~= "api.lua" then
 		local clickme = api.Button:new(2,table.getn(explorer.buttons)+1,file)
 		clickme.run = function()
