@@ -1,4 +1,4 @@
-local api = require("api")
+local api = require("/whyOS/api")
 
 local background_color = colors.gray
 local function ends_with(str, ending)
