@@ -4,6 +4,12 @@ local background_color = colors.gray
 local function ends_with(str, ending)
    return ending == "" or str:sub(-#ending) == ending
 end
+function inTable(tbl, item)
+    for key, value in pairs(tbl) do
+        if value == item then return key end
+    end
+    return false
+end
 function render_win(value)
 	for x = value.x,value.x+value.width do
 		for y = value.y,value.y+value.height do
@@ -57,12 +63,14 @@ function render()
 end
 explorer = api.Window:new(1,5,15,6,"Desktop")
 for _,file in ipairs(fs.list("/whyOS/")) do
-	if ends_with(file,".lua") and file ~= "whyOS.lua" and file ~= "api.lua" then
-		local clickme = api.Button:new(2,table.getn(explorer.buttons)+1,file)
+	if ends_with(file,".lua") and file ~= "whyOS.lua" and file ~= "api.lua" and file ~= "installer.lua" then
+		local clickme = api.Button:new(2,table.getn(explorer.buttons)+1,require(file:gsub('.lua','')).name)
 		clickme.run = function()
-			api.window_list[table.getn(api.window_list)+1] = require(file:gsub('.lua',''))
+			if inTable(api.window_list,require(file:gsub('.lua','')).win) == false then
+				api.window_list[table.getn(api.window_list)+1] = require(file:gsub('.lua','')).win
+			end
 		end
-		explorer.buttons[table.getn(explorer.buttons)+1] = clickme
+		explorer:AddButton(clickme)
 	end
 end
 
@@ -95,7 +103,7 @@ while true do
 				end
 			end
 			end
-		h = h-1
+		--h = h-1
 		if api.window_list[key].x+api.window_list[key].width > w then
 			api.window_list[key].x = w-api.window_list[key].width
 		end

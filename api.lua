@@ -2,6 +2,7 @@ Window = {}
 Label = {}
 Button = {}
 window_list = {}
+Pixel = {}
 M = {}
 function Window:new(x, y,width,height,title)
 	if width == nil then
@@ -64,6 +65,12 @@ function Window:new(x, y,width,height,title)
 		end
 		return index
 	end
+	function obj:AddLabel(label)
+		obj.labels[table.getn(obj.labels)+1] = label
+	end
+	function obj:AddButton(button)
+		obj.buttons[table.getn(obj.buttons)+1] = button
+	end
 	function obj:getButtonCharOnPos(x,y)
 		local character = ""
 		for k,v in pairs(obj.buttons) do
@@ -125,4 +132,4 @@ function Button:new(x, y,text)
     setmetatable(obj, self)
     self.__index = self; return obj
 end
-return {Button = Button,Label = Label,Window = Window,window_list = window_list}
+return {Button = Button,Label = Label,Window = Window,window_list = window_list,Pixel = Pixel}
