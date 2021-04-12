@@ -22,7 +22,7 @@ function Window:new(x, y,width,height,title)
 		obj.title = title
 		obj.labels = {}
 		obj.buttons = {}
-		obj.pixels = {}
+		obj.pixxels = {}
 		obj.canclose = true
 
     function obj:move(x,y)
@@ -56,6 +56,31 @@ function Window:new(x, y,width,height,title)
 		end
 		return character
 	end
+	function obj:getLabelTColorOnPos(x,y)
+		local color = colors.black
+		for k,v in pairs(obj.labels) do
+			if obj.labels[k].x-1 < x-obj.x and obj.labels[k].x+string.len(obj.labels[k].text)+1 > x-obj.x and obj.labels[k].y == y-obj.y then
+				color = obj.labels[k].textcolor
+			end
+		end
+		return color
+	end
+	function obj:getLabelBColorOnPos(x,y)
+		local color = colors.black
+		for k,v in pairs(obj.labels) do
+			if obj.labels[k].x-1 < x-obj.x and obj.labels[k].x+string.len(obj.labels[k].text)+1 > x-obj.x and obj.labels[k].y == y-obj.y then
+				color = obj.labels[k].backcolor
+			end
+		end
+		return color
+	end
+	function obj:changeLabel(label)
+		for k,v in pairs(obj.labels) do
+			if obj.labels[k].x-1 < label.x and obj.labels[k].x+string.len(obj.labels[k].text)+1 > label.x and obj.labels[k].y == label.y then
+				obj.labels[k] = label
+			end
+		end
+	end
 	function obj:getButtonOnPos(x,y)
 		local index = false
 		for k,v in pairs(obj.buttons) do
@@ -70,6 +95,27 @@ function Window:new(x, y,width,height,title)
 	end
 	function obj:AddButton(button)
 		obj.buttons[table.getn(obj.buttons)+1] = button
+	end
+	function obj:RemoveButton(x,y)
+		for k,v in pairs(obj.buttons) do
+			if obj.buttons[k].x-1 < x and obj.buttons[k].x+string.len(obj.buttons[k].text)+1 > x and obj.buttons[k].y == y then
+				table.remove(obj.buttons,k)
+			end
+		end
+	end
+	function obj:RemoveLabel(x,y)
+		for k,v in pairs(obj.buttons) do
+			if obj.labels[k].x-1 < x and obj.labels[k].x+string.len(obj.labels[k].text)+1 > x and obj.labels[k].y == y then
+				table.remove(obj.labels,k)
+			end
+		end
+	end
+	function obj:RemovePixel(x,y)
+		for k,v in pairs(obj.pixels) do
+			if obj.pixels[k].x == x and obj.pixels[k].y == y then
+				table.remove(obj.pixels,k)
+			end
+		end
 	end
 	function obj:getButtonCharOnPos(x,y)
 		local character = ""
@@ -87,27 +133,22 @@ function Window:new(x, y,width,height,title)
 			end
 		end
 	end
+	function obj:close()
+		table.remove(window_list,obj)
+	end
     setmetatable(obj, self)
     self.__index = self; return obj
 end
-function Pixel:new(x,y,color)
-	local obj= {}
-        obj.x = x
-        obj.y = y
-		obj.color = color
-
-    function obj:move(x,y)
-        obj.x = x
-		obj.y = y
-    end
-    setmetatable(obj, self)
-    self.__index = self; return obj
-end
-function Label:new(x, y,text)
+function Label:new(x, y,text,tcolor,bcolor)
+	if tcolor == nil then
+		tcolor = colors.black
+	end
     local obj= {}
         obj.x = x
         obj.y = y
 		obj.text = text
+		obj.textcolor = tcolor
+		obj.backcolor = bcolor
 
     function obj:move(x,y)
         obj.x = x

@@ -1,5 +1,5 @@
 local api = require("/whyOS/api")
-
+active = 1
 local background_color = colors.gray
 local function ends_with(str, ending)
    return ending == "" or str:sub(-#ending) == ending
@@ -34,8 +34,8 @@ function render_win(value)
 						print(value:getButtonCharOnPos(x+1,y))
 					end
 				else
-					term.setBackgroundColor(colors.white)
-					term.setTextColor(colors.black)
+					term.setBackgroundColor(value:getLabelBColorOnPos(x+1,y))
+					term.setTextColor(value:getLabelTColorOnPos(x+1,y))
 					print(value:getLabelCharOnPos(x+1,y))
 				end
 				
@@ -73,7 +73,6 @@ for _,file in ipairs(fs.list("/whyOS/")) do
 		explorer:AddButton(clickme)
 	end
 end
-
 table.insert(explorer.buttons,clickme)
 explorer.canclose = false
 window_list[0] = explorer
@@ -101,8 +100,12 @@ while true do
 				if api.window_list[key]:getButtonOnPos(p2,p3) then
 					api.window_list[key]:buttonClickedOnPos(p2,p3)
 				end
+				for key2,value2 in pairs(api.window_list) do
+					api.window_list[key2].active = false
+				end
+				api.window_list[key].active = true
 			end
-			end
+		end
 		--h = h-1
 		if api.window_list[key].x+api.window_list[key].width > w then
 			api.window_list[key].x = w-api.window_list[key].width
