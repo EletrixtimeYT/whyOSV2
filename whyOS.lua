@@ -85,7 +85,7 @@ while true do
   local w, h = term.getSize()
   for key,value in pairs(window_list) do --actualcode
 		if event == "mouse_drag" then
-			if window_list[key].x-3 < p2 and window_list[key].x + window_list[key].width+3 > p2 and window_list[key].y-3 < p3 and window_list[key].y+3 > p3 then
+			if window_list[key].x-6 < p2 and window_list[key].x + window_list[key].width+6 > p2 and window_list[key].y-6 < p3 and window_list[key].y+6 > p3 then
 				window_list[key].x = p2
 				window_list[key].y = p3
 				do break end
