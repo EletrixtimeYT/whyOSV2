@@ -1,7 +1,7 @@
 shell.run("cd /")
 shell.run("mkdir whyOS")
 shell.run("wget https://raw.githubusercontent.com/timaaos/whyOS/main/whyOS.lua /whyOS/whyOS.lua")
-shell.run("wget https://raw.githubusercontent.com/timaaos/whyOS/main/test.lua /whyOS/test.lua")
+shell.run("wget https://raw.githubusercontent.com/EletrixtimeYT/whyOSV2/main/test.lua /whyOS/test.lua")
 shell.run("wget https://raw.githubusercontent.com/timaaos/whyOS/main/api.lua /whyOS/api.lua")
 print("Done!")
 print("Do /whyOS/whyOS to run!")
